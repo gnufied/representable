@@ -12,6 +12,7 @@ module Representable
     
     def self.included(base)
       base.class_eval do
+        attr_accessor :data_record
         include Representable
         include InstanceMethods
       end
@@ -48,18 +49,31 @@ module Representable
     end
     
     module InstanceMethods # :nodoc:
+      # writing some crazy code here!
+      def initialize(data_record)
+        @data_record = data_record
+      end
+
       # Returns a Nokogiri::XML object representing this object.
       def to_json(options={})
         attributes = {}.tap do |root|
           refs = self.class.representable_attrs.map {|attr| JSON.binding_for_definition(attr) }
-          
           refs.each do |ref|
-            value = public_send(ref.accessor) # DISCUSS: eventually move back to Ref.
+            value = find_by_type(ref) # DISCUSS: eventually move back to Ref.
             ref.update_json(root, value) if value
           end
         end
         
         options[:wrap] == false ? attributes : {self.class.representation_name => attributes}
+      end
+
+      def find_by_type(ref)
+        value = public_send(ref.accessor)
+        if ref.respond_to?(:sought_type)
+          ref.sought_type.new(value)
+        else
+          value
+        end
       end
     end
   end # Xml

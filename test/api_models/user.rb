@@ -9,6 +9,7 @@ end
 module Api
   class SimpleUser
     include Representable::JSON
+    self.representation_name = "user"
     representable_property :fullname
   end
 end

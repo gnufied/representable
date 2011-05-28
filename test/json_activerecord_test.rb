@@ -43,8 +43,8 @@ class JsonActiveRecordTest < MiniTest::Spec
       post.save
 
       api_post = Api::Post.new(post)
-      data = JSON[api_post.to_json]
-      assert_equal "hey", data["post"]["title"]
+      data = api_post.to_json
+      assert_equal "Hey", data["post"]["title"]
       assert_equal "Bye", data["post"]["content"]
       assert_equal "foo", data["post"]["user"]["fullname"]
     end
