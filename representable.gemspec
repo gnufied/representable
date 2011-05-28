@@ -20,6 +20,7 @@ Gem::Specification.new do |s|
   s.require_paths = ["lib"]
   
   s.add_dependency "activesupport"
+
   s.add_dependency "hooks"
   s.add_dependency "nokogiri"
   s.add_dependency "i18n"
@@ -27,4 +28,6 @@ Gem::Specification.new do |s|
   
   s.add_development_dependency "rspec"
   s.add_development_dependency "test_xml"
+  s.add_development_dependency "sqlite3"
+  s.add_development_dependency "activerecord", "~> 3.0.7"
 end

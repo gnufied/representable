@@ -4,4 +4,8 @@ build
 doc
 Rake.config
 pkg
+Gemfile.lock
 .project
+TAGS
+test.sqlite3
+
